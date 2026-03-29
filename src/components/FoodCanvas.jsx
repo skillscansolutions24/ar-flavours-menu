@@ -4,9 +4,8 @@ import { OrbitControls, useGLTF, Float, ContactShadows } from '@react-three/drei
 
 function Model() {
   // Replace 'food_model.glb' with your actual filename in public folder
-  const { scene } = useGLTF('/food_model.glb'); 
-  return <primitive object={scene} scale={2.5} position={[0, -1, 0]} />;
-}
+  // Replace your current useGLTF line with this one:
+const { scene } = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/bowl-broth/model.gltf');
 
 export default function FoodCanvas() {
   return (
