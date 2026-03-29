@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Star, ChevronRight, Bell, ShoppingBag, X, Plus, Minus, Leaf, Flame, Maximize2, CheckCircle, MapPin } from 'lucide-react';
+import FoodCanvas from '../components/FoodCanvas';
 
 const DemoEngine = () => {
   const [step, setStep] = useState('menu'); // menu, cart, feedback
@@ -9,7 +10,6 @@ const DemoEngine = () => {
   const [category, setCategory] = useState('all');
   const [previewItem, setPreviewItem] = useState(null);
 
-  // Auto-scroll to top when steps change
   useEffect(() => { window.scrollTo(0,0); }, [step]);
 
   const menu = [
@@ -17,16 +17,8 @@ const DemoEngine = () => {
     { id: 2, type: 'non-veg', name: "Apollo Fish", price: 380, desc: "Hyderabadi spiced deep-fried fish fillets.", img: "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?w=800" },
     { id: 3, type: 'non-veg', name: "Tandoori Chicken Full", price: 580, desc: "Clay oven roasted chicken with mint chutney.", img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=800" },
     { id: 4, type: 'non-veg', name: "Mutton Seekh Kebab", price: 420, desc: "Minced lamb skewers grilled to perfection.", img: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=800" },
-    { id: 5, type: 'non-veg', name: "Chicken 65", price: 320, desc: "Classic spicy tempered chicken appetizer.", img: "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?w=800" },
-    { id: 6, type: 'non-veg', name: "Butter Chicken", price: 390, desc: "Creamy tomato gravy with grilled chicken chunks.", img: "https://images.unsplash.com/photo-1603894527134-99e44e3f1265?w=800" },
-    { id: 7, type: 'non-veg', name: "Prawns Iguru", price: 490, desc: "Spicy South Indian style prawn roast.", img: "https://images.unsplash.com/photo-1565689157206-0fddef7589a2?w=800" },
     { id: 8, type: 'veg', name: "Paneer Butter Masala", price: 340, desc: "Soft paneer cubes in rich makhani gravy.", img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=800" },
     { id: 9, type: 'veg', name: "Veg Dum Biryani", price: 310, desc: "Seasonal vegetables slow cooked with aromatic rice.", img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=800" },
-    { id: 10, type: 'veg', name: "Gobi Manchurian", price: 260, desc: "Crispy cauliflower tossed in soy-garlic sauce.", img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=800" },
-    { id: 11, type: 'veg', name: "Dal Makhani", price: 280, desc: "Overnight slow-cooked black lentils.", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=800" },
-    { id: 12, type: 'veg', name: "Crispy Corn", price: 240, desc: "Fried sweet corn tossed with peppercorns.", img: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=800" },
-    { id: 13, type: 'veg', name: "Stuffed Mushroom", price: 350, desc: "Cheese filled mushrooms grilled in Tandoor.", img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=800" },
-    { id: 14, type: 'veg', name: "Double Ka Meetha", price: 180, desc: "Fried bread soaked in saffron milk.", img: "https://images.unsplash.com/photo-1589119908995-c6837fa14848?w=800" },
     { id: 15, type: 'veg', name: "Himalayan Mineral Water", price: 60, desc: "750ml Bottled natural spring water.", img: "https://images.unsplash.com/photo-1616118132261-dd50d60ad435?w=800" }
   ];
 
@@ -47,7 +39,6 @@ const DemoEngine = () => {
 
   return (
     <div className="app-container">
-      {/* 🔔 KITCHEN NOTIFICATION */}
       {showNotification && (
         <div className="alert-toast" style={{animation: 'slideDown 0.4s forwards'}}>
           <div className="alert-icon"><Bell size={20}/></div>
@@ -58,7 +49,6 @@ const DemoEngine = () => {
         </div>
       )}
 
-      {/* 🖼️ IMAGE PREVIEW MODAL */}
       {previewItem && (
         <div className="modal-overlay" onClick={() => setPreviewItem(null)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
@@ -78,7 +68,6 @@ const DemoEngine = () => {
         </div>
       )}
 
-      {/* --- MENU STEP --- */}
       {step === 'menu' && (
         <>
           <div className="hero-section" style={{backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1544145945-f904253d0c71?q=80&w=1000&auto=format&fit=crop')`}}>
@@ -87,6 +76,19 @@ const DemoEngine = () => {
             </div>
             <h1 style={{fontSize: '32px'}}>AR Flavours</h1>
             <p style={{opacity: 0.9}}>Authentic Tastes • Table 04</p>
+          </div>
+
+          {/* 🚀 3D SPECIALS SECTION */}
+          <div style={{ padding: '20px 15px 0' }}>
+            <h3 style={{ fontSize: '14px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '10px' }}>
+              Interactive 3D Specials
+            </h3>
+            <div style={{ background: '#f8fafc', borderRadius: '25px', overflow: 'hidden', border: '1px solid #e2e8f0', height: '320px' }}>
+               <FoodCanvas />
+               <p style={{ textAlign: 'center', fontSize: '11px', color: '#94a3b8', paddingBottom: '10px', marginTop: '-20px' }}>
+                 Swipe to rotate • Pinch to zoom
+               </p>
+            </div>
           </div>
 
           <div className="tab-container">
@@ -99,7 +101,7 @@ const DemoEngine = () => {
             {menu.filter(i => category === 'all' || i.type === category).map(item => (
               <div key={item.id} className="menu-item">
                 <div className="img-container" onClick={() => setPreviewItem(item)}>
-                  <img src={item.img} className="item-img" />
+                  <img src={item.img} className="item-img" alt={item.name} />
                   <div className="zoom-hint"><Maximize2 size={14} color="white"/></div>
                 </div>
                 <div className="item-info">
@@ -126,7 +128,6 @@ const DemoEngine = () => {
         </>
       )}
 
-      {/* --- CART STEP --- */}
       {step === 'cart' && (
         <div style={{padding: '20px', animation: 'fadeIn 0.3s'}}>
           <div style={{display:'flex', alignItems:'center', gap:'15px', marginBottom: '30px'}}>
@@ -165,7 +166,6 @@ const DemoEngine = () => {
         </div>
       )}
 
-      {/* --- FEEDBACK / GOOGLE REVIEW STEP --- */}
       {step === 'feedback' && (
         <div style={{padding: '40px 20px', textAlign: 'center', animation: 'slideUp 0.4s'}}>
           <div className="premium-card" style={{padding: '30px 20px'}}>
@@ -183,7 +183,6 @@ const DemoEngine = () => {
               ))}
             </div>
 
-            {/* GOOGLE REVIEW LOGIC: Points to AR Flavours Maps link */}
             {rating >= 4 && (
               <div style={{background: '#f0fdf4', padding: '25px', borderRadius: '20px', border: '2px dashed #22c55e', animation: 'bounceIn 0.5s'}}>
                 <CheckCircle color="#16a34a" size={40} style={{margin: '0 auto 15px'}}/>
