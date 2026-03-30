@@ -1,93 +1,94 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { User, ShieldCheck } from 'lucide-react';
 
-// Import all the components we built
-import DemoEngine from './pages/DemoEngine'; // Your original Menu page
+// Unified Imports - Ensure these filenames match your /src/pages/ folder exactly
+import CustomerMenu from './pages/CustomerMenu'; 
 import ManagerDashboard from './pages/ManagerDashboard';
 
 function App() {
-  const [isAdmin, setIsAdmin] = useState(false);
-
   return (
     <BrowserRouter>
-      <div style={{ position: 'relative', minHeight: '100vh', fontFamily: 'Inter, sans-serif' }}>
+      <div style={{ minHeight: '100vh', fontFamily: '"Inter", sans-serif' }}>
         
-        {/* 🛠️ THE DEMO SWITCHER (Hidden "Pro" Toggle) */}
+        {/* 🛠️ NAVIGATION ROUTES */}
+        <Routes>
+          <Route path="/" element={<CustomerMenu />} />
+          <Route path="/manager" element={<ManagerDashboard />} />
+        </Routes>
+
+        {/* 📱 MOBILE FLOATING NAV (For Demo Purposes) */}
         <div style={{
           position: 'fixed',
           bottom: '20px',
-          right: '20px',
+          left: '50%',
+          transform: 'translateX(-50%)',
           zIndex: 9999,
           display: 'flex',
-          gap: '10px'
+          gap: '10px',
+          background: 'rgba(255, 255, 255, 0.9)',
+          padding: '8px',
+          borderRadius: '40px',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255,255,255,0.3)'
         }}>
           <Link 
             to="/" 
-            onClick={() => setIsAdmin(false)}
             style={{
-              padding: '12px 20px',
-              background: !isAdmin ? '#f97316' : '#fff',
-              color: !isAdmin ? '#fff' : '#1e293b',
+              padding: '10px 18px',
+              background: '#f97316',
+              color: '#fff',
               borderRadius: '30px',
               textDecoration: 'none',
               fontWeight: 'bold',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+              fontSize: '12px',
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
-              border: '1px solid #e2e8f0'
+              gap: '6px'
             }}
           >
-            <User size={18}/> Customer Menu
+            <User size={16}/> Customer
           </Link>
 
           <Link 
             to="/manager" 
-            onClick={() => setIsAdmin(true)}
             style={{
-              padding: '12px 20px',
-              background: isAdmin ? '#1e293b' : '#fff',
-              color: isAdmin ? '#fff' : '#1e293b',
+              padding: '10px 18px',
+              background: '#1e293b',
+              color: '#fff',
               borderRadius: '30px',
               textDecoration: 'none',
               fontWeight: 'bold',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+              fontSize: '12px',
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
-              border: '1px solid #e2e8f0'
+              gap: '6px'
             }}
           >
-            <ShieldCheck size={18}/> Manager Portal
+            <ShieldCheck size={16}/> Manager
           </Link>
         </div>
 
-        {/* 🚦 NAVIGATION ROUTES */}
-        <Routes>
-          <Route path="/" element={<DemoEngine />} />
-          <Route path="/manager" element={<ManagerDashboard />} />
-        </Routes>
-
-        {/* 🎨 GLOBAL STYLES (Paste this into your index.css too) */}
+        {/* 🎨 GLOBAL STYLES FIXES */}
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
           
-          body { margin: 0; padding: 0; background: #f8fafc; }
-          
+          body { 
+            margin: 0; 
+            padding: 0; 
+            background: #f8fafc; 
+            -webkit-font-smoothing: antialiased;
+          }
+
+          /* Utility to hide scrollbars on mobile */
+          .no-scrollbar::-webkit-scrollbar { display: none; }
+          .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
           @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
           }
-
-          @keyframes scaleIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-          }
-
-          /* Hide scrollbar for Chrome, Safari and Opera */
-          .no-scrollbar::-webkit-scrollbar { display: none; }
-          .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         `}</style>
       </div>
     </BrowserRouter>
